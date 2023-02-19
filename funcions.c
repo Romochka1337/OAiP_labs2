@@ -7,7 +7,7 @@
 char *readFile() {
     long length;
 
-    FILE *f = fopen("/Users/roman/CLionProjects/index.html", "r");
+    FILE *f = fopen("/Users/roman/CLionProjects/lab1/index.html", "r");
 
     fseek(f, 0, SEEK_END);
     length = ftell(f);
