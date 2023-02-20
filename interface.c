@@ -42,7 +42,7 @@ void mainMenu(Car *carArr, int carArrSize){
             clearMemory(carArr);
             break;
         default:
-            printf("Неверный аргумент");
+            printf("\nНеверный аргумент");
             printf("\n-------------------------------------------------------------------\n\n");
             mainMenu(carArr, carArrSize);
             break;

@@ -167,7 +167,7 @@ void *deleteFromArray(Car *carArr, int *carArrSize){
     if ( deleteId < 0 || deleteId >= *carArrSize) {
         printf("\nНеверный id");
     }else{
-        for (int i = deleteId + 0; i < (*carArrSize) - 1; i++) {
+        for (int i = deleteId; i < (*carArrSize) - 2; i++) {
             carArr[i] = carArr[i+1];
         }
         (*carArrSize)--;
