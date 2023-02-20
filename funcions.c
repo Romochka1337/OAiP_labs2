@@ -32,7 +32,7 @@ String *getInfo(char *doc, String *strArr ,int *len, char *firstDelimiter, char 
         diff = strlen(pos) - strlen(newPos);
         tmpStr = malloc(sizeof(char) * diff);
         for (int i = firstDelSize; i < diff; i++) {
-            char *tmpChar = malloc(sizeof(char) * 1);
+            char *tmpChar = malloc(0);
             tmpChar[0] = pos[i];
             strcat(tmpStr, tmpChar);
         }
@@ -92,14 +92,17 @@ Car *parseHTML(int *len) {
         carArr[i] = obj;
     }
 
-    String *priceArr = calloc(*len, sizeof(String));
     char *firstPriceDel = "<div class=\"tov_price\">";
     char *secondPriceDel = " р.";
     int priceCounter=0;
+    String *priceArr = calloc(*len, sizeof(String));
     priceArr = getInfo(doc, priceArr, &priceCounter, firstPriceDel, secondPriceDel);
     for (int i = 0; i < *len; i++) {
         carArr[i].price = atoi(priceArr[i].str);
     }
+    free(strArr);
+    free(doc);
+    free(priceArr);
     return carArr;
 }
 
@@ -164,12 +167,13 @@ void *deleteFromArray(Car *carArr, int *carArrSize){
     if ( deleteId < 0 || deleteId > *carArrSize) {
         printf("\nНеверный id");
     }else{
-        for (int i = deleteId + 1; i < (*carArrSize); i++) {
+        for (int i = deleteId + 1; i < (*carArrSize) - 1; i++) {
             carArr[i-1] = carArr[i];
         }
         (*carArrSize)--;
         printf("\nАвтомобиль удалён.");
     }
+    return NULL;
 }
 
 void singleSortYear(Car *arr, int arrSize){

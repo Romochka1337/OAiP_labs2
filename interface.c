@@ -3,7 +3,7 @@
 #include "functions.h"
 #include "interface.h"
 
-void mainMenu( Car *carArr, int carArrSize){
+void mainMenu(Car *carArr, int carArrSize){
     int choice;
     printf("\n1 - Вывести массив на экран");
     printf("\n2 - Создать экземпляр структуры");
@@ -44,7 +44,7 @@ void mainMenu( Car *carArr, int carArrSize){
     }
 }
 
-void sortingMenu( Car *carArr, int carArrSize){
+void sortingMenu(Car *carArr, int carArrSize){
     int parameter1;
     printf("\n1 - по одному полю, 2 - по двум полям: ");
     printf("\nВыберите вариант сортировки: ");
@@ -62,7 +62,7 @@ void sortingMenu( Car *carArr, int carArrSize){
     }
 }
 
-void choseSingleParameter(  Car *carArr, int carArrSize){
+void choseSingleParameter(Car *carArr, int carArrSize){
     int parameter2;
     printf("\n1 - по цене");
     printf("\n2 - по году выпуска");
@@ -112,6 +112,6 @@ void choseDoubleParameter(Car *carArr, int carArrSize){
     }
 }
 
-void clearMemory( Car *carArr){
+void clearMemory(Car *carArr){
     free(carArr);
 }
