@@ -164,11 +164,11 @@ void *deleteFromArray(Car *carArr, int *carArrSize){
     int deleteId;
     printf("\nВведите id автомобиля, который вы хотите удалить: ");
     scanf("%d", &deleteId);
-    if ( deleteId < 0 || deleteId > *carArrSize) {
+    if ( deleteId < 0 || deleteId >= *carArrSize) {
         printf("\nНеверный id");
     }else{
-        for (int i = deleteId + 1; i < (*carArrSize) - 1; i++) {
-            carArr[i-1] = carArr[i];
+        for (int i = deleteId + 0; i < (*carArrSize) - 1; i++) {
+            carArr[i] = carArr[i+1];
         }
         (*carArrSize)--;
         printf("\nАвтомобиль удалён.");
@@ -186,7 +186,6 @@ void singleSortYear(Car *arr, int arrSize){
         {
             if (arr[j].year < temp.year)
                 break;
-
             arr[j + 1] = arr[j];
             arr[j] = temp;
         }
@@ -202,7 +201,6 @@ void singleSortPrice(Car *arr, int arrSize){
         {
             if (arr[j].price < temp.price)
                 break;
-
             arr[j + 1] = arr[j];
             arr[j] = temp;
         }

@@ -41,6 +41,11 @@ void mainMenu(Car *carArr, int carArrSize){
         case 5:
             clearMemory(carArr);
             break;
+        default:
+            printf("Неверный аргумент");
+            printf("\n-------------------------------------------------------------------\n\n");
+            mainMenu(carArr, carArrSize);
+            break;
     }
 }
 
