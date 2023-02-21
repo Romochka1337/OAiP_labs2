@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "functions.h"
+#include "sortings.h"
 
 
 char *readFile() {
@@ -167,113 +168,24 @@ void *deleteFromArray(Car *carArr, int *carArrSize){
     if ( deleteId < 0 || deleteId >= *carArrSize) {
         printf("\nНеверный id");
     }else{
-        for (int i = deleteId; i < (*carArrSize) - 2; i++) {
+        for (int i = deleteId; i < (*carArrSize) - 1; i++) {
             carArr[i] = carArr[i+1];
         }
         (*carArrSize)--;
+        carArr = realloc(carArr, *carArrSize * sizeof(Car));
         printf("\nАвтомобиль удалён.");
     }
     return NULL;
 }
 
-void singleSortYear(Car *arr, int arrSize){
-    int i, j;
-    Car temp;
-    for (i = 1; i < arrSize; i++)
-    {
-        temp = arr[i];
-        for (j = i - 1; j >= 0; j--)
-        {
-            if (arr[j].year < temp.year)
-                break;
-            arr[j + 1] = arr[j];
-            arr[j] = temp;
-        }
-    }
-}
-void singleSortPrice(Car *arr, int arrSize){
-    int i, j;
-     Car temp;
-    for (i = 1; i < arrSize; i++)
-    {
-        temp = arr[i];
-        for (j = i - 1; j >= 0; j--)
-        {
-            if (arr[j].price < temp.price)
-                break;
-            arr[j + 1] = arr[j];
-            arr[j] = temp;
-        }
-    }
-}
-void singleSortModel(Car *arr, int arrSize){
-    int i,j;
-    Car temp;
-    for(i=0;i<arrSize-1;i++)
-        for(j=i+1;j<arrSize;j++)
-            if(strcmp(arr[i].model,arr[j].model)>0){
-                temp=arr[i];
-                arr[i]=arr[j];
-                arr[j]=temp;
-            }
-}
-void singleSortColor(Car *arr, int arrSize){
-    int i, j;
-    Car temp;
-    for (i = 1; i < arrSize; i++)
-    {
-        temp = arr[i];
-        for (j = i - 1; j >= 0; j--)
-        {
-            if (arr[j].color < temp.color)
-                break;
-            arr[j + 1] = arr[j];
-            arr[j] = temp;
-        }
-    }
-}
 
-void doubleSortYearPrice(Car *arr, int arrSize){
-    singleSortYear(arr, arrSize);
-    for (int i = 0; i < arrSize - 1; i++)
-    {
-        for (int j = (arrSize - 1); j > i; j--)
-        {
-            if ((arr[j - 1].year == arr[j].year)&&(arr[j - 1].price > arr[j].price))
-            {
-                Car temp = arr[j - 1];
-                arr[j - 1] = arr[j];
-                arr[j] = temp;
-            }
-        }
-    }
-}
 
-void doubleSortColorYear(Car *arr, int arrSize){
-    singleSortColor(arr, arrSize);
-    for (int i = 0; i < arrSize - 1; i++){
-        for (int j = (arrSize - 1); j > i; j--){
-            if ((arr[i].color==arr[j].color)&&(arr[j - 1].year > arr[j].year)){
-                Car temp = arr[j - 1];
-                arr[j - 1] = arr[j];
-                arr[j] = temp;
-            }
-        }
-    }
-}
 
-void doubleSortYearModel(Car *arr, int arrSize){
-    singleSortYear(arr, arrSize);
-    for (int i = 0; i < arrSize - 1; i++){
-        for (int j = (arrSize - 1); j > i; j--){
-            if ((strcmp(arr[i].model,arr[j].model)>0)&&(arr[i].year==arr[j].year)){
-                Car temp = arr[j - 1];
-                arr[j - 1] = arr[j];
-                arr[j] = temp;
-            }
-        }
-    }
-}
+
+
+
+
+
 
 
 

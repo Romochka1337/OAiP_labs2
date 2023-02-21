@@ -64,6 +64,12 @@ build CMakeFiles/lab1.dir/interface.c.o: C_COMPILER__lab1_Debug /Users/roman/CLi
   OBJECT_DIR = CMakeFiles/lab1.dir
   OBJECT_FILE_DIR = CMakeFiles/lab1.dir
 
+build CMakeFiles/lab1.dir/sortings.c.o: C_COMPILER__lab1_Debug /Users/roman/CLionProjects/lab1/sortings.c || cmake_object_order_depends_target_lab1
+  DEP_FILE = CMakeFiles/lab1.dir/sortings.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu2x
+  OBJECT_DIR = CMakeFiles/lab1.dir
+  OBJECT_FILE_DIR = CMakeFiles/lab1.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target lab1
@@ -72,7 +78,7 @@ build CMakeFiles/lab1.dir/interface.c.o: C_COMPILER__lab1_Debug /Users/roman/CLi
 #############################################
 # Link the executable lab1
 
-build lab1: C_EXECUTABLE_LINKER__lab1_Debug CMakeFiles/lab1.dir/main.c.o CMakeFiles/lab1.dir/funcions.c.o CMakeFiles/lab1.dir/interface.c.o
+build lab1: C_EXECUTABLE_LINKER__lab1_Debug CMakeFiles/lab1.dir/main.c.o CMakeFiles/lab1.dir/funcions.c.o CMakeFiles/lab1.dir/interface.c.o CMakeFiles/lab1.dir/sortings.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk
   OBJECT_DIR = CMakeFiles/lab1.dir
   POST_BUILD = :

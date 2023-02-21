@@ -3,4 +3,4 @@ project(lab1 C)
 
 set(CMAKE_C_STANDARD 23)
 
-add_executable(lab1 main.c funcions.c interface.c model.h functions.h interface.h)
+add_executable(lab1 main.c funcions.c interface.c model.h functions.h interface.h sortings.c sortings.h)

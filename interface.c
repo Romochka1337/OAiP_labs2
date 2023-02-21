@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "functions.h"
 #include "interface.h"
+#include "sortings.h"
 
 void mainMenu(Car *carArr, int carArrSize){
     int choice;
@@ -78,16 +79,16 @@ void choseSingleParameter(Car *carArr, int carArrSize){
     rewind(stdin);
     switch(parameter2) {
         case 1:
-            singleSortPrice(carArr, carArrSize);
+            singleSort(carArr,carArrSize, 1);
             break;
         case 2:
-            singleSortYear(carArr, carArrSize);
+            singleSort(carArr,carArrSize, 2);
             break;
         case 3:
-            singleSortColor(carArr, carArrSize);
+            singleSort(carArr,carArrSize, 3);
             break;
         case 4:
-            singleSortModel(carArr, carArrSize);
+            singleSort(carArr,carArrSize, 4);
             break;
         default:
             break;
@@ -104,13 +105,13 @@ void choseDoubleParameter(Car *carArr, int carArrSize){
     rewind(stdin);
     switch(parameter2) {
         case 1:
-            doubleSortColorYear(carArr, carArrSize);
+            doubleSort(carArr, carArrSize, 3, 2);
             break;
         case 2:
-            doubleSortYearPrice(carArr, carArrSize);
+            doubleSort(carArr, carArrSize, 2, 1);
             break;
         case 3:
-            doubleSortYearModel(carArr, carArrSize);
+            doubleSort(carArr, carArrSize, 2, 4);
             break;
         default:
             break;
