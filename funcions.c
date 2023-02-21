@@ -163,11 +163,10 @@ void showArr(Car *carArr, int carArrSize){
 
 Car *deleteFromArray(Car *carArr, int *carArrSize){
     int deleteId;
-    int arrSize = *carArrSize;
     printf("\nВведите id автомобиля, который вы хотите удалить: ");
     scanf("%d", &deleteId);
-    if (deleteId >= 0 || deleteId < arrSize) {
-        for (int i = deleteId+1; i < arrSize; i++) {
+    if ( deleteId >= 0 || deleteId < *carArrSize) {
+        for (int i = deleteId+1; i < (*carArrSize); i++) {
             carArr[i-1] = carArr[i];
         }
         (*carArrSize)--;
