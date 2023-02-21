@@ -161,20 +161,21 @@ void showArr(Car *carArr, int carArrSize){
     }
 }
 
-void *deleteFromArray(Car *carArr, int *carArrSize){
+Car *deleteFromArray(Car *carArr, int *carArrSize){
     int deleteId;
     printf("\nВведите id автомобиля, который вы хотите удалить: ");
     scanf("%d", &deleteId);
     if ( deleteId < 0 || deleteId >= *carArrSize) {
         printf("\nНеверный id");
     }else{
-        for (int i = deleteId+1; i < (*carArrSize) - 3; i++) {
+        for (int i = deleteId; i < (*carArrSize) - 1; i++) {
             carArr[i] = carArr[i+1];
         }
         (*carArrSize)--;
+        carArr = realloc(carArr, *carArrSize * sizeof(Car));
         printf("\nАвтомобиль удалён.");
     }
-    return NULL;
+    return carArr;
 }
 
 
