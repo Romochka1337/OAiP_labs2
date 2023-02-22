@@ -8,7 +8,7 @@ typedef enum {
 typedef struct{
     int year;
     float price;
-    const char *model;
+    char *model;
     Color color;
 }Car;
 typedef struct{

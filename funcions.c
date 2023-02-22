@@ -4,24 +4,24 @@
 #include "functions.h"
 #include "sortings.h"
 
-
 char *readFile() {
     long length;
 
-    FILE *f = fopen("../index.html", "r");
+    FILE *file = fopen("../index.html", "r");
+    if(file){
+        fseek(file, 0, SEEK_END);
+        length = ftell(file);
+        fseek(file, 0, SEEK_SET);
+        char *buffer = calloc(length, 1);
 
-    fseek(f, 0, SEEK_END);
-    length = ftell(f);
-    fseek(f, 0, SEEK_SET);
-    char *buffer = calloc(length, 1);
+        fread(buffer, 1, length, file);
+        fclose(file);
+        return buffer;
+    } else return NULL;
 
-    fread(buffer, 1, length, f);
-    fclose(f);
-
-    return buffer;
 }
 
-String *getInfo(char *doc, String *strArr ,int *len, char *firstDelimiter, char *secondDelimiter) {
+String *getInfo(const char *doc, String *strArr ,int *len,const char *firstDelimiter,const char *secondDelimiter) {
     int diff;
     char *pos = doc;
     char *newPos;
@@ -33,7 +33,7 @@ String *getInfo(char *doc, String *strArr ,int *len, char *firstDelimiter, char 
         diff = strlen(pos) - strlen(newPos);
         tmpStr = malloc(sizeof(char) * diff);
         for (int i = firstDelSize; i < diff; i++) {
-            char *tmpChar = malloc(0);
+            char *tmpChar = malloc(sizeof(char));
             tmpChar[0] = pos[i];
             strcat(tmpStr, tmpChar);
         }
@@ -101,34 +101,52 @@ Car *parseHTML(int *len) {
     for (int i = 0; i < *len; i++) {
         carArr[i].price = atoi(priceArr[i].str);
     }
-    free(strArr);
-    free(doc);
-    free(priceArr);
+    clearStrMemory(strArr, doc, priceArr, *len);
     return carArr;
 }
-
+int strLength(const char *str)
+{
+    int i = 0;
+    while (str[i] != '\0')
+        i++;
+    return i + 1;
+}
 Car *createCarObject(Car *carArr, int *arrSize){
     char *model = (char*)calloc(1024, sizeof(char));
     int chooseColor;
     int year;
     float price;
     printf("\nВведите название автомобиля: ");
-    scanf("%s", model);
+    do
+    {
+        fgets(model, 1024, stdin);
+        rewind(stdin);
+    } while (strLength(model) < 1 && getchar() != '\0');
+    char *mas = (char*)realloc(model, (strLength(model) + 1) * sizeof(char));
+    if (mas != NULL)
+        model = mas;
     rewind(stdin);
+
     printf("Введите цену: ");
-    scanf("%f", &price);
-    rewind(stdin);
-    printf("Введите год создания: ");
-    scanf("%d", &year);
-    rewind(stdin);
+    while (!scanf("%f", &price) || price <= 0 || getchar() != '\n') {
+        printf("\nНеверный аргумент:");
+        rewind(stdin);
+    }
+    printf("Введите год: ");
+    while (!scanf("%d", &year) || year <= 0 || getchar() != '\n') {
+        printf("\nНеверный аргумент:");
+        rewind(stdin);
+    }
     printf("\n1 - BLACK");
     printf("\n2 - BLUE");
     printf("\n3 - GRAY");
     printf("\n4 - RAD: ");
     printf("\n5 - WHITE ");
     printf("\nВыберите цвет: ");
-    scanf("%d", &chooseColor);
-    rewind(stdin);
+    while (!scanf("%d", &chooseColor) || chooseColor <= 0 || getchar() != '\n') {
+        printf("\nНеверный аргумент:");
+        rewind(stdin);
+    }
     chooseColor--;
     Car carObject = {year,price,  model, chooseColor};
     carArr = (Car*)realloc(carArr, sizeof(Car) * ((*arrSize) + 1));
@@ -137,8 +155,15 @@ Car *createCarObject(Car *carArr, int *arrSize){
     return carArr;
 }
 void showArr(Car *carArr, int carArrSize){
+
     for (int i = 0; i < carArrSize; i++) {
-        printf("\nid[%d]: model: %s, price: %5.1f, year: %d", i,  carArr[i].model, carArr[i].price, carArr[i].year);
+        int j=0;
+        printf("\n[id]:%d, model: ", i);
+        while(carArr[i].model[j] != '\n' && carArr[i].model[j] != '\0'){
+            printf("%c", carArr[i].model[j]);
+            j++;
+        }
+        printf(" price: %5.1f, year: %d", carArr[i].price, carArr[i].year);
         switch (carArr[i].color) {
             case 0:
                 printf(", color: BLACK");
@@ -164,7 +189,10 @@ void showArr(Car *carArr, int carArrSize){
 Car *deleteFromArray(Car *carArr, int *carArrSize){
     int deleteId;
     printf("\nВведите id автомобиля, который вы хотите удалить: ");
-    scanf("%d", &deleteId);
+    while (!scanf("%d", &deleteId) || deleteId > *carArrSize || deleteId < 0 || getchar() != '\n') {
+        printf("\nНеверный аргумент. Попробуйте снова: ");
+        rewind(stdin);
+    }
     if ( deleteId >= 0 || deleteId < *carArrSize) {
         for (int i = deleteId+1; i < (*carArrSize); i++) {
             carArr[i-1] = carArr[i];
@@ -176,6 +204,16 @@ Car *deleteFromArray(Car *carArr, int *carArrSize){
         printf("\nНеверный id");
     }
     return carArr;
+}
+void clearStrMemory(String *strArr, char *doc, String *priceArr, int len){
+    for (int i = 0; i < len; i++) {
+        free(strArr[i].str);
+    }
+    for (int i = 0; i < len; i++) {
+        free(priceArr[i].str);
+    }
+    free(doc);
+    free(strArr);
 }
 
 

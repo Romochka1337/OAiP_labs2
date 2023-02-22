@@ -12,9 +12,10 @@ void mainMenu(Car *carArr, int carArrSize){
     printf("\n4 - Выполнить сортировки массива");
     printf("\n5 - Завершить программу");
     printf("\nВыберите действие: ");
-    scanf("%d", &choice);
-    rewind(stdin);
-
+    while (!scanf("%d", &choice) || choice > 5 || choice <= 0 || getchar() != '\n') {
+        printf("\nНеверный аргумент. Попробуйте снова: ");
+        rewind(stdin);
+    }
     switch(choice) {
         case 1:
             printf("\n-------------------------------------------------------------------\n");
@@ -40,23 +41,22 @@ void mainMenu(Car *carArr, int carArrSize){
             mainMenu(carArr, carArrSize);
             break;
         case 5:
-            clearMemory(carArr);
+            clearCarMemory(carArr, carArrSize);
             break;
         default:
-            printf("\nНеверный аргумент");
-            printf("\n-------------------------------------------------------------------\n\n");
-            mainMenu(carArr, carArrSize);
             break;
     }
 }
 
 void sortingMenu(Car *carArr, int carArrSize){
-    int parameter1;
+    int param1;
     printf("\n1 - по одному полю, 2 - по двум полям: ");
     printf("\nВыберите вариант сортировки: ");
-    scanf("%d", &parameter1);
-    rewind(stdin);
-    switch (parameter1) {
+    while (!scanf("%d", &param1) || param1 > 2 || param1 <= 0 || getchar() != '\n') {
+        printf("\nНеверный аргумент:");
+        rewind(stdin);
+    }
+    switch (param1) {
         case 1:
             choseSingleParameter(carArr, carArrSize);
             break;
@@ -69,15 +69,17 @@ void sortingMenu(Car *carArr, int carArrSize){
 }
 
 void choseSingleParameter(Car *carArr, int carArrSize){
-    int parameter2;
+    int param;
     printf("\n1 - по цене");
     printf("\n2 - по году выпуска");
     printf("\n3 - по цвету");
     printf("\n4 - по названию");
     printf("\nВыберите параметр для сортировки: ");
-    scanf("%d", &parameter2);
-    rewind(stdin);
-    switch(parameter2) {
+    while (!scanf("%d", &param) || param > 2 || param <= 0 || getchar() != '\n') {
+        printf("\nНеверный аргумент:");
+        rewind(stdin);
+    }
+    switch(param) {
         case 1:
             singleSort(carArr,carArrSize, 1);
             break;
@@ -96,14 +98,16 @@ void choseSingleParameter(Car *carArr, int carArrSize){
 }
 
 void choseDoubleParameter(Car *carArr, int carArrSize){
-    int parameter2;
+    int param2;
     printf("\n1 - по цвету и году");
     printf("\n2 - по году и цене");
     printf("\n3 - по году и названию");
     printf("\nВыберите параметр для сортировки: ");
-    scanf("%d", &parameter2);
-    rewind(stdin);
-    switch(parameter2) {
+    while (!scanf("%d", &param2) || param2 > 3 || param2 <= 0 || getchar() != '\n') {
+        printf("\nНеверный аргумент:");
+        rewind(stdin);
+    }
+    switch(param2) {
         case 1:
             doubleSort(carArr, carArrSize, 3, 2);
             break;
@@ -118,6 +122,9 @@ void choseDoubleParameter(Car *carArr, int carArrSize){
     }
 }
 
-void clearMemory(Car *carArr){
+void clearCarMemory(Car *carArr, int carArrSize){
+    for (int i = 0; i < carArrSize; i++) {
+        free(carArr[i].model);
+    }
     free(carArr);
 }
