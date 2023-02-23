@@ -9,8 +9,8 @@ void mainMenu(Car *carArr, int carArrSize){
     printf("\n1 - Вывести массив на экран");
     printf("\n2 - Создать экземпляр структуры");
     printf("\n3 - Удалить экземпляр структуры");
-    printf("\n4 - Выполнить сортировки массива");
-    printf("\n5 - Завершить программу");
+    printf("\n4 - Cортировки");
+    printf("\n5 - Завершить");
     printf("\nВыберите действие: ");
     while (!scanf("%d", &choice) || choice > 5 || choice <= 0 || getchar() != '\n') {
         printf("\nНеверный аргумент. Попробуйте снова: ");
@@ -71,11 +71,11 @@ void sortingMenu(Car *carArr, int carArrSize){
 void choseSingleParameter(Car *carArr, int carArrSize){
     int param;
     printf("\n1 - по цене");
-    printf("\n2 - по году выпуска");
+    printf("\n2 - по году");
     printf("\n3 - по цвету");
     printf("\n4 - по названию");
     printf("\nВыберите параметр для сортировки: ");
-    while (!scanf("%d", &param) || param > 2 || param <= 0 || getchar() != '\n') {
+    while (!scanf("%d", &param) || param > 4 || param <= 0 || getchar() != '\n') {
         printf("\nНеверный аргумент:");
         rewind(stdin);
     }

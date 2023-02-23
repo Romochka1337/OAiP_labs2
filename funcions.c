@@ -36,6 +36,7 @@ String *getInfo(const char *doc, String *strArr ,int *len,const char *firstDelim
             char *tmpChar = malloc(sizeof(char));
             tmpChar[0] = pos[i];
             strcat(tmpStr, tmpChar);
+            free(tmpChar);
         }
         (*len)++;
         strArr = realloc(strArr, (*len) * sizeof(Car));
@@ -60,20 +61,16 @@ Car *parseHTML(int *len) {
         Car obj;
         int diff;
         char *pos=strArr[i].str;
-
         char *newPos= strstr(pos, "(");
         diff = strlen(pos)- strlen(newPos);
         char *model= calloc(diff, sizeof(char));
-
         for (int j = 0; j < diff; j++) {
             model[j] = pos[j];
         }
-
         char *year = calloc(4, sizeof(char));
         for (int j = 1; j < 5; j++) {
             year[j-1] = newPos[j];
         }
-
         int color;
         if (strstr(strArr[i].str, "BLACK") != NULL){
             color = 0;
@@ -86,13 +83,11 @@ Car *parseHTML(int *len) {
         } else{
             color = 4;
         }
-
         obj.model = model;
         obj.year = atoi(year) ;
         obj.color = color;
         carArr[i] = obj;
     }
-
     char *firstPriceDel = "<div class=\"tov_price\">";
     char *secondPriceDel = " р.";
     int priceCounter=0;
@@ -143,7 +138,7 @@ Car *createCarObject(Car *carArr, int *arrSize){
     printf("\n4 - RAD: ");
     printf("\n5 - WHITE ");
     printf("\nВыберите цвет: ");
-    while (!scanf("%d", &chooseColor) || chooseColor <= 0 || getchar() != '\n') {
+    while (!scanf("%d", &chooseColor) || chooseColor <= 0 || chooseColor > 5 || getchar() != '\n') {
         printf("\nНеверный аргумент:");
         rewind(stdin);
     }
@@ -189,11 +184,12 @@ void showArr(Car *carArr, int carArrSize){
 Car *deleteFromArray(Car *carArr, int *carArrSize){
     int deleteId;
     printf("\nВведите id автомобиля, который вы хотите удалить: ");
-    while (!scanf("%d", &deleteId) || deleteId > *carArrSize || deleteId < 0 || getchar() != '\n') {
+    while (!scanf("%d", &deleteId) || deleteId >= *carArrSize || deleteId < 0 || getchar() != '\n') {
         printf("\nНеверный аргумент. Попробуйте снова: ");
         rewind(stdin);
     }
     if ( deleteId >= 0 || deleteId < *carArrSize) {
+        free(carArr[deleteId].model);
         for (int i = deleteId+1; i < (*carArrSize); i++) {
             carArr[i-1] = carArr[i];
         }
@@ -214,6 +210,7 @@ void clearStrMemory(String *strArr, char *doc, String *priceArr, int len){
     }
     free(doc);
     free(strArr);
+    free(priceArr);
 }
 
 
