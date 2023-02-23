@@ -22,17 +22,17 @@ char *readFile() {
 }
 
 String *getInfo(const char *doc, String *strArr ,int *len,const char *firstDelimiter,const char *secondDelimiter) {
-    unsigned long diff;
+    unsigned long long diff;
     const char *pos = doc;
     char *newPos;
-    unsigned long firstDelSize = strlen(firstDelimiter);
+    unsigned long long firstDelSize = strlen(firstDelimiter);
     char *tmpStr;
     do {
         pos = strstr(pos, firstDelimiter);
         newPos = strstr(pos, secondDelimiter);
         diff = strlen(pos) - strlen(newPos);
         tmpStr = malloc(sizeof(char) * diff);
-        for (unsigned long i = firstDelSize; i < diff; i++) {
+        for (unsigned long long i = firstDelSize; i < diff; i++) {
             char *tmpChar = malloc(sizeof(char));
             tmpChar[0] = pos[i];
             strcat(tmpStr, tmpChar);
@@ -59,7 +59,7 @@ Car *parseHTML(int *len) {
     Car *carArr = calloc(*len, sizeof(Car));
     for (int i = 0; i < *len; i++) {
         Car obj;
-        unsigned long diff;
+        unsigned long long diff;
         const char *pos=strArr[i].str;
         const char *newPos= strstr(pos, "(");
         diff = strlen(pos)- strlen(newPos);
