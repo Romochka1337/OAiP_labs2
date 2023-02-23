@@ -190,8 +190,8 @@ Car *deleteFromArray(Car *carArr, int *carArrSize){
     }
     if ( deleteId >= 0 || deleteId < *carArrSize) {
         free(carArr[deleteId].model);
-        for (int i = deleteId+1; i < (*carArrSize); i++) {
-            carArr[i-1] = carArr[i];
+        for (int i = deleteId+2; i < (*carArrSize); i++) {
+            carArr[i-2] = carArr[i-1];
         }
         (*carArrSize)--;
         carArr = realloc(carArr, *carArrSize * sizeof(Car));
