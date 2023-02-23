@@ -51,7 +51,7 @@ void doubleSort(Car *carArr, int arrSize, int firstParam, int secondParam){
                     carArr[j] = temp;
                 }
             } else if((firstParam == 2) && (secondParam == 4)){
-                if ((carArr[i].color==carArr[j].color)&&(strcmp(carArr[i].model,carArr[j].model)>0)){
+                if ((carArr[i].year==carArr[j].year)&&(strcmp(carArr[j - 1].model,carArr[j].model)>0)){
                     Car temp = carArr[j - 1];
                     carArr[j - 1] = carArr[j];
                     carArr[j] = temp;

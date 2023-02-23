@@ -22,17 +22,17 @@ char *readFile() {
 }
 
 String *getInfo(const char *doc, String *strArr ,int *len,const char *firstDelimiter,const char *secondDelimiter) {
-    int diff;
-    char *pos = doc;
+    unsigned long diff;
+    const char *pos = doc;
     char *newPos;
-    int firstDelSize = strlen(firstDelimiter);
+    unsigned long firstDelSize = strlen(firstDelimiter);
     char *tmpStr;
     do {
         pos = strstr(pos, firstDelimiter);
         newPos = strstr(pos, secondDelimiter);
         diff = strlen(pos) - strlen(newPos);
         tmpStr = malloc(sizeof(char) * diff);
-        for (int i = firstDelSize; i < diff; i++) {
+        for (unsigned long i = firstDelSize; i < diff; i++) {
             char *tmpChar = malloc(sizeof(char));
             tmpChar[0] = pos[i];
             strcat(tmpStr, tmpChar);
@@ -53,15 +53,15 @@ Car *parseHTML(int *len) {
     char *doc = readFile();
 
     String *strArr = calloc(*len, sizeof(String));
-    char *firstDelimiter = "<a class=\"tov_info\"><strong>";
-    char *secondDelimiter = "</strong>";
+    const char *firstDelimiter = "<a class=\"tov_info\"><strong>";
+    const char *secondDelimiter = "</strong>";
     strArr = getInfo(doc, strArr, len, firstDelimiter, secondDelimiter);
     Car *carArr = calloc(*len, sizeof(Car));
     for (int i = 0; i < *len; i++) {
         Car obj;
-        int diff;
-        char *pos=strArr[i].str;
-        char *newPos= strstr(pos, "(");
+        unsigned long diff;
+        const char *pos=strArr[i].str;
+        const char *newPos= strstr(pos, "(");
         diff = strlen(pos)- strlen(newPos);
         char *model= calloc(diff, sizeof(char));
         for (int j = 0; j < diff; j++) {
@@ -88,8 +88,8 @@ Car *parseHTML(int *len) {
         obj.color = color;
         carArr[i] = obj;
     }
-    char *firstPriceDel = "<div class=\"tov_price\">";
-    char *secondPriceDel = " р.";
+    const char *firstPriceDel = "<div class=\"tov_price\">";
+    const char *secondPriceDel = " р.";
     int priceCounter=0;
     String *priceArr = calloc(*len, sizeof(String));
     priceArr = getInfo(doc, priceArr, &priceCounter, firstPriceDel, secondPriceDel);
