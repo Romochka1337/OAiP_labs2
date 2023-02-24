@@ -49,15 +49,15 @@ String *getInfo(const char *doc, String *strArr ,int *len,const char *firstDelim
     return strArr;
 }
 
-Car *parseHTML(int *len) {
+Car *parseHTML(int *carArrSize) {
     char *doc = readFile();
 
-    String *strArr = calloc(*len, sizeof(String));
+    String *strArr = calloc(*carArrSize, sizeof(String));
     const char *firstDelimiter = "<a class=\"tov_info\"><strong>";
     const char *secondDelimiter = "</strong>";
-    strArr = getInfo(doc, strArr, len, firstDelimiter, secondDelimiter);
-    Car *carArr = calloc(*len, sizeof(Car));
-    for (int i = 0; i < *len; i++) {
+    strArr = getInfo(doc, strArr, carArrSize, firstDelimiter, secondDelimiter);
+    Car *carArr = calloc(*carArrSize, sizeof(Car));
+    for (int i = 0; i < *carArrSize; i++) {
         Car obj;
         unsigned long long diff;
         const char *pos=strArr[i].str;
@@ -91,12 +91,12 @@ Car *parseHTML(int *len) {
     const char *firstPriceDel = "<div class=\"tov_price\">";
     const char *secondPriceDel = " р.";
     int priceCounter=0;
-    String *priceArr = calloc(*len, sizeof(String));
+    String *priceArr = calloc(*carArrSize, sizeof(String));
     priceArr = getInfo(doc, priceArr, &priceCounter, firstPriceDel, secondPriceDel);
-    for (int i = 0; i < *len; i++) {
-        carArr[i].price = atoi(priceArr[i].str);
+    for (int i = 0; i < *carArrSize; i++) {
+        carArr[i].price = atof(priceArr[i].str);
     }
-    clearStrMemory(strArr, doc, priceArr, *len);
+    clearStrMemory(strArr, doc, priceArr, *carArrSize);
     return carArr;
 }
 int strLength(const char *str)
@@ -106,7 +106,7 @@ int strLength(const char *str)
         i++;
     return i + 1;
 }
-Car *createCarObject(Car *carArr, int *arrSize){
+Car *createCarObject(Car *carArr, int *carArrSize){
     char *model = (char*)calloc(1024, sizeof(char));
     int chooseColor;
     int year;
@@ -144,36 +144,37 @@ Car *createCarObject(Car *carArr, int *arrSize){
     }
     chooseColor--;
     Car carObject = {year,price,  model, chooseColor};
-    carArr = (Car*)realloc(carArr, sizeof(Car) * ((*arrSize) + 1));
-    carArr[(*arrSize)] = carObject;
-    (*arrSize)++;
+    carArr = (Car*)realloc(carArr, sizeof(Car) * ((*carArrSize) + 1));
+    carArr[(*carArrSize)] = carObject;
+    (*carArrSize)++;
     return carArr;
 }
 void showArr(Car *carArr, int carArrSize){
 
     for (int i = 0; i < carArrSize; i++) {
         int j=0;
-        printf("\n[id]:%d, model: ", i);
+        printf("\n[id]:%2d,  model: ", i);
         while(carArr[i].model[j] != '\n' && carArr[i].model[j] != '\0'){
             printf("%c", carArr[i].model[j]);
             j++;
         }
-        printf(" price: %5.1f, year: %d", carArr[i].price, carArr[i].year);
+
+        printf(",   price: %5.1f,   year: %d", carArr[i].price, carArr[i].year);
         switch (carArr[i].color) {
             case 0:
-                printf(", color: BLACK");
+                printf(",   color: BLACK");
                 break;
             case 1:
-                printf(", color: BLUE");
+                printf(",   color: BLUE");
                 break;
             case 2:
-                printf(", color: GRAY");
+                printf(",   color: GRAY");
                 break;
             case 3:
-                printf(", color: RAD");
+                printf(",   color: RAD");
                 break;
             case 4:
-                printf(", color: WHITE");
+                printf(",   color: WHITE");
                 break;
             default:
                 break;
@@ -201,11 +202,11 @@ Car *deleteFromArray(Car *carArr, int *carArrSize){
     }
     return carArr;
 }
-void clearStrMemory(String *strArr, char *doc, String *priceArr, int len){
-    for (int i = 0; i < len; i++) {
+void clearStrMemory(String *strArr, char *doc, String *priceArr, int size){
+    for (int i = 0; i < size; i++) {
         free(strArr[i].str);
     }
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < size; i++) {
         free(priceArr[i].str);
     }
     free(doc);

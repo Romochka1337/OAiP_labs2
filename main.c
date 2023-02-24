@@ -2,9 +2,9 @@
 #include "interface.h"
 
 int main() {
-    int len = 0;
-    Car *carArr = parseHTML(&len);
-    mainMenu(carArr, len);
+    int carArrSize = 0;
+    Car *carArr = parseHTML(&carArrSize);
+    mainMenu(carArr, carArrSize);
     return 0;
 }
 
