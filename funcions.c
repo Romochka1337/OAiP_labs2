@@ -78,7 +78,7 @@ Car *parseHTML(int *carArrSize) {
             color = 1;
         } else if (strstr(strArr[i].str, "GRAY") != NULL){
             color= 2;
-        } else if (strstr(strArr[i].str, "RAD") != NULL){
+        } else if (strstr(strArr[i].str, "RED") != NULL){
             color = 3;
         } else{
             color = 4;
@@ -135,7 +135,7 @@ Car *createCarObject(Car *carArr, int *carArrSize){
     printf("\n1 - BLACK");
     printf("\n2 - BLUE");
     printf("\n3 - GRAY");
-    printf("\n4 - RAD: ");
+    printf("\n4 - RED: ");
     printf("\n5 - WHITE ");
     printf("\nВыберите цвет: ");
     while (!scanf("%d", &chooseColor) || chooseColor <= 0 || chooseColor > 5 || getchar() != '\n') {
@@ -149,7 +149,7 @@ Car *createCarObject(Car *carArr, int *carArrSize){
     (*carArrSize)++;
     return carArr;
 }
-void showArr(const Car *carArr, int carArrSize){
+void showArr(Car *carArr, int carArrSize){
 
     for (int i = 0; i < carArrSize; i++) {
         int j=0;
@@ -171,7 +171,7 @@ void showArr(const Car *carArr, int carArrSize){
                 printf(",   color: GRAY");
                 break;
             case 3:
-                printf(",   color: RAD");
+                printf(",   color: RED");
                 break;
             case 4:
                 printf(",   color: WHITE");
