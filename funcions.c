@@ -24,7 +24,7 @@ char *readFile() {
 String *getInfo(const char *doc, String *strArr ,int *len,const char *firstDelimiter,const char *secondDelimiter) {
     unsigned long long diff;
     const char *pos = doc;
-    char *newPos;
+    const char *newPos;
     unsigned long long firstDelSize = strlen(firstDelimiter);
     char *tmpStr;
     do {
