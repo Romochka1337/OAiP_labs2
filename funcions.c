@@ -149,7 +149,7 @@ Car *createCarObject(Car *carArr, int *carArrSize){
     (*carArrSize)++;
     return carArr;
 }
-void showArr(Car *carArr, int carArrSize){
+void showArr(const Car *carArr, int carArrSize){
 
     for (int i = 0; i < carArrSize; i++) {
         int j=0;
